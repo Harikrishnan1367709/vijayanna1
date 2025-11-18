@@ -1,0 +1,72 @@
+#%RAML 1.0
+title: User Authentication API
+version: v1
+baseUri: http://localhost:8081/api
+mediaType: application/json
+
+types:
+  LoginRequest:
+    type: object
+    properties:
+      username: 
+         type: string
+      password:
+        type: string
+
+
+  LoginResponse:
+    type: object
+    properties:
+      accessToken: 
+        type: string
+      tokenType: 
+        type : string
+      expiresIn: 
+        type : integer
+
+  ResetPasswordRequest:
+    type: object
+    properties:
+      email: 
+        type: string
+        required : true
+
+
+  ResetPasswordResponse:
+    type: object
+    properties:
+      message: 
+        type: string
+        required : true
+
+/auth:
+  post:
+    description: User login with username and password
+    body:
+      application/json:
+        type: LoginRequest
+    responses:
+      200:
+        description: Successful login
+        body:
+          application/json:
+            type: LoginResponse
+      400:
+        description: Missing or invalid credentials
+      401:
+        description: Unauthorized
+
+/reset-password:
+  post:
+    description: Request password reset using email
+    body:
+      application/json:
+        type: ResetPasswordRequest
+    responses:
+      200:
+        description: Password reset request accepted
+        body:
+          application/json:
+            type: ResetPasswordResponse
+      404:
+        description: Email not found

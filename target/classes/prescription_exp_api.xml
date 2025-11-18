@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="d9155daa-e941-4040-838a-56376efb376f" >
+		<http:request-connection protocol="HTTPS" />
+	</http:request-config>
+	<http:request-config name="HTTP_Request_configuration1" doc:name="HTTP Request configuration" doc:id="13978152-82db-4ef6-b22b-cab744d99c8e" basePath="/api" >
+		<http:request-connection host="nonprod-api" />
+	</http:request-config>
+	<flow name="prescription_exp_apiFlow" doc:id="dd6351a6-5820-495e-a77e-3ee8828f9841" >
+		<http:listener doc:name="Listener" doc:id="3d31f9b4-5861-4813-805f-be455814a7c7" config-ref="userAPI-httpListenerConfig" path="/APIPATH"/>
+		<logger level="INFO" doc:name="Logger" doc:id="2157774f-5d2e-43d2-8bb7-b841b89158e7" message="#['STARTED']"/>
+		<http:request method="GET" doc:name="Request" doc:id="9bbb4e54-0a39-49f4-8a29-71499dc897e8" config-ref="HTTP_Request_configuration1" path="/clients"/>
+	</flow>
+</mule>
